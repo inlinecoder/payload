@@ -207,6 +207,37 @@ export default buildConfigWithDefaults({
         },
       ],
     },
+    {
+      slug: 'multiple-collections-parents',
+      fields: [
+        {
+          type: 'join',
+          name: 'children',
+          collection: ['multiple-collections-1', 'multiple-collections-2'],
+          on: 'parent',
+        },
+      ],
+    },
+    {
+      slug: 'multiple-collections-1',
+      fields: [
+        {
+          type: 'relationship',
+          relationTo: 'multiple-collections-parents',
+          name: 'parent',
+        },
+      ],
+    },
+    {
+      slug: 'multiple-collections-2',
+      fields: [
+        {
+          type: 'relationship',
+          relationTo: 'multiple-collections-parents',
+          name: 'parent',
+        },
+      ],
+    },
   ],
   localization: {
     locales: ['en', 'es'],

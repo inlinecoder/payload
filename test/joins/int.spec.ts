@@ -1024,6 +1024,34 @@ describe('Joins Field', () => {
 
     expect(joinedDoc2.id).toBe(depthJoin_3.id)
   })
+
+  describe('Array of collection', () => {
+    it('should join across multiple collections', async () => {
+      let parent = await payload.create({ collection: 'multiple-collections-parents', data: {} })
+      const child_1 = await payload.create({
+        collection: 'multiple-collections-1',
+        data: {
+          parent,
+        },
+      })
+
+      const child_2 = await payload.create({
+        collection: 'multiple-collections-2',
+        data: {
+          parent,
+        },
+      })
+
+      parent = await payload.findByID({
+        collection: 'multiple-collections-parents',
+        id: parent.id,
+        depth: 0,
+      })
+
+      expect(parent.children.docs[0].value).toBe(child_1.id)
+      expect(parent.children.docs[1].value).toBe(child_2.id)
+    })
+  })
 })
 
 async function createPost(overrides?: Partial<Post>, locale?: Config['locale']) {
