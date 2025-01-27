@@ -28,6 +28,26 @@ export const sanitizeJoinField = ({
     joinPath: `${joinPath ? joinPath + '.' : ''}${field.name}`,
     targetField: undefined,
   }
+
+  if (Array.isArray(field.collection)) {
+    field.sanitizedMany = []
+    for (const collection of field.collection) {
+      const sanitizedField = {
+        ...field,
+        collection,
+      }
+      sanitizeJoinField({
+        config,
+        field: sanitizedField,
+        joinPath,
+        joins,
+      })
+
+      field.sanitizedMany.push(sanitizedField)
+    }
+    return
+  }
+
   const joinCollection = config.collections.find(
     (collection) => collection.slug === field.collection,
   )

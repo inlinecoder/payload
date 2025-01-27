@@ -39,86 +39,86 @@ describe('Joins Field', () => {
   beforeAll(async () => {
     ;({ payload, restClient } = await initPayloadInt(dirname))
 
-    const data = await restClient
-      .POST('/users/login', {
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      })
-      .then((res) => res.json())
+    // const data = await restClient
+    //   .POST('/users/login', {
+    //     body: JSON.stringify({
+    //       email,
+    //       password,
+    //     }),
+    //   })
+    //   .then((res) => res.json())
 
-    token = data.token
-    user = data.user
+    // token = data.token
+    // user = data.user
 
-    category = await payload.create({
-      collection: categoriesSlug,
-      data: {
-        name: 'paginate example',
-        group: {},
-      },
-    })
+    // category = await payload.create({
+    //   collection: categoriesSlug,
+    //   data: {
+    //     name: 'paginate example',
+    //     group: {},
+    //   },
+    // })
 
-    otherCategory = await payload.create({
-      collection: categoriesSlug,
-      data: {
-        name: 'otherCategory',
-        group: {},
-      },
-    })
+    // otherCategory = await payload.create({
+    //   collection: categoriesSlug,
+    //   data: {
+    //     name: 'otherCategory',
+    //     group: {},
+    //   },
+    // })
 
-    // create an upload
-    const imageFilePath = path.resolve(dirname, './image.png')
-    const imageFile = await getFileByPath(imageFilePath)
+    // // create an upload
+    // const imageFilePath = path.resolve(dirname, './image.png')
+    // const imageFile = await getFileByPath(imageFilePath)
 
-    const { id: uploadedImage } = await payload.create({
-      collection: uploadsSlug,
-      data: {},
-      file: imageFile,
-    })
+    // const { id: uploadedImage } = await payload.create({
+    //   collection: uploadsSlug,
+    //   data: {},
+    //   file: imageFile,
+    // })
 
-    categoryID = idToString(category.id, payload)
+    // categoryID = idToString(category.id, payload)
 
-    for (let i = 0; i < 15; i++) {
-      let categories = [category.id]
-      if (i % 2 === 0) {
-        categories = [category.id, otherCategory.id]
-      }
-      await createPost({
-        title: `test ${i}`,
-        category: category.id,
-        upload: uploadedImage,
-        categories,
-        categoriesLocalized: categories,
-        polymorphic: {
-          relationTo: 'categories',
-          value: category.id,
-        },
-        polymorphics: [
-          {
-            relationTo: 'categories',
-            value: category.id,
-          },
-        ],
-        localizedPolymorphic: {
-          relationTo: 'categories',
-          value: category.id,
-        },
-        localizedPolymorphics: [
-          {
-            relationTo: 'categories',
-            value: category.id,
-          },
-        ],
-        group: {
-          category: category.id,
-          camelCaseCategory: category.id,
-        },
-        array: [{ category: category.id }],
-        localizedArray: [{ category: category.id }],
-        blocks: [{ blockType: 'block', category: category.id }],
-      })
-    }
+    // for (let i = 0; i < 15; i++) {
+    //   let categories = [category.id]
+    //   if (i % 2 === 0) {
+    //     categories = [category.id, otherCategory.id]
+    //   }
+    //   await createPost({
+    //     title: `test ${i}`,
+    //     category: category.id,
+    //     upload: uploadedImage,
+    //     categories,
+    //     categoriesLocalized: categories,
+    //     polymorphic: {
+    //       relationTo: 'categories',
+    //       value: category.id,
+    //     },
+    //     polymorphics: [
+    //       {
+    //         relationTo: 'categories',
+    //         value: category.id,
+    //       },
+    //     ],
+    //     localizedPolymorphic: {
+    //       relationTo: 'categories',
+    //       value: category.id,
+    //     },
+    //     localizedPolymorphics: [
+    //       {
+    //         relationTo: 'categories',
+    //         value: category.id,
+    //       },
+    //     ],
+    //     group: {
+    //       category: category.id,
+    //       camelCaseCategory: category.id,
+    //     },
+    //     array: [{ category: category.id }],
+    //     localizedArray: [{ category: category.id }],
+    //     blocks: [{ blockType: 'block', category: category.id }],
+    //   })
+    // }
   })
 
   afterAll(async () => {

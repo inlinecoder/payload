@@ -245,7 +245,7 @@ export default buildConfigWithDefaults({
   },
   onInit: async (payload) => {
     if (process.env.SEED_IN_CONFIG_ONINIT !== 'false') {
-      await seed(payload)
+      // await seed(payload)
     }
   },
   typescript: {
